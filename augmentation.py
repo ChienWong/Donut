@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 class DataAugmentation(object):
     """
@@ -85,3 +86,23 @@ class MissingDataInjection(DataAugmentation):
         missing = np.copy(missing)
         missing[inject_idx] = 1
         return values, labels, missing
+
+'''
+inject anomaly point to test dataset
+'''
+def inject_error_test(values, labels, error_rate=0.01):
+    rate=error_rate-np.sum(labels)/len(labels)
+    mean=np.sum(values)/len(values)
+    std=np.std(values)
+    inject= np.random.binomial(1, error_rate, size=len(values))
+    for i in range(len(inject)):
+        if inject[i]==1 and labels[i]!=1:
+            values[i]=np.random.normal(mean, std)
+            labels[i]=1
+    return values, labels
+
+
+
+        
+        
+
