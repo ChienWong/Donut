@@ -25,7 +25,8 @@ if not os.path.exists(path.replace("dataset", "modelweight").replace("csv", "h5"
     model.fit(x=train_data,
     validation_data=valid_data, 
     epochs=512, 
-    callbacks=[tf.keras.callbacks.LearningRateScheduler(scheduler)],
+    callbacks=[tf.keras.callbacks.LearningRateScheduler(scheduler),
+    tf.keras.callbacks.TensorBoard("logs")],
     workers=4,
     use_multiprocessing=True
     )
